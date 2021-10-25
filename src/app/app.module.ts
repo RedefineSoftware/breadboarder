@@ -11,6 +11,23 @@ const monacoConfig: NgxMonacoEditorConfig = {
   onMonacoLoad() {
     monaco.languages.register({ id: 'bbml' });
 
+    monaco.languages.setLanguageConfiguration('bbml', {
+      comments: {
+        lineComment: "//"
+      },
+      brackets: [
+        ["{", "}"]
+      ],
+      autoClosingPairs: [
+        { open: "{", close: "}" },
+        { open: "\"", close: "\""}
+      ],
+      surroundingPairs: [
+        ["{", "}"],
+        ["\"", "\""]
+      ]
+    })
+
     // Register a tokens provider for BBML
     monaco.languages.setMonarchTokensProvider('bbml', {
       keywords: [
@@ -45,6 +62,8 @@ const monacoConfig: NgxMonacoEditorConfig = {
           { include: '@whitespace' },
 
           // delimiters and operators
+          [/[{}()\[\]]/, '@brackets'],
+          [/[<>](?!@symbols)/, '@brackets'],
           [/@symbols/, {
             cases: {
               '@operators': 'operator',
@@ -52,18 +71,10 @@ const monacoConfig: NgxMonacoEditorConfig = {
             }
           }],
 
-          // @ annotations.
-          // As an example, we emit a debugging log message on these tokens.
-          // Note: message are supressed during the first load -- change some lines to see them.
-          [/@\s*[a-zA-Z_\$][\w\$]*/, { token: 'annotation', log: 'annotation token: $0' }],
-
           // numbers
           [/\d*\.\d+([eE][\-+]?\d+)?/, 'number.float'],
           [/0[xX][0-9a-fA-F]+/, 'number.hex'],
           [/\d+/, 'number'],
-
-          // delimiter: after number because of .\d floats
-          [/[;,.]/, 'delimiter'],
 
           // strings
           [/"([^"\\]|\\.)*$/, 'string.invalid'],  // non-teminated string

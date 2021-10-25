@@ -41,7 +41,8 @@ export class AppComponent {
     language: 'bbml',
     minimap: {
       enabled: false
-    }
+    },
+    autoClosingBrackets: 'languageDefined'
   };
 
   code = `screen Login {
