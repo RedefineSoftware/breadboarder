@@ -11,6 +11,7 @@ const monacoConfig: NgxMonacoEditorConfig = {
   onMonacoLoad() {
     monaco.languages.register({ id: 'bbml' });
 
+    // inspired by: https://code.visualstudio.com/api/language-extensions/language-configuration-guide
     monaco.languages.setLanguageConfiguration('bbml', {
       comments: {
         lineComment: "//"
@@ -29,6 +30,7 @@ const monacoConfig: NgxMonacoEditorConfig = {
     })
 
     // Register a tokens provider for BBML
+    // inspired by: https://microsoft.github.io/monaco-editor/monarch.html
     monaco.languages.setMonarchTokensProvider('bbml', {
       keywords: [
         'if', 'else', 'goto'
