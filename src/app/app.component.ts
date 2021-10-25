@@ -15,8 +15,8 @@ import bbml from './bbml.js';
         {{ ast | json }}
       </div>
 
-      <div class="run-pane">
-      </div>
+      <bb-runner class="run-pane">
+      </bb-runner>
     </div>
   `,
   styles: [`
