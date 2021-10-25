@@ -34,6 +34,10 @@ import { BbmlSyntaxTree } from './shared/ast.model.js';
     .code-pane {
       background: #1e1e1e;
     }
+
+    .run-pane {
+      overflow: auto;
+    }
   `]
 })
 export class AppComponent {

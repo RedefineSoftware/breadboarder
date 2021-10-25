@@ -14,6 +14,7 @@ export enum BbmlItemType {
 
 export interface BbmlScreen {
   type: BbmlItemType.Screen;
+  name: string;
   items: BbmlScreenItem[];
 }
 
@@ -67,6 +68,5 @@ export type BbmlScreenItem =
   | BbmlConditional
   | BbmlComment;
 
-export type BbmlSyntaxTree = (BbmlScreen | BbmlComment)[];
+export type BbmlSyntaxTree = BbmlScreen[];
 
-const testAst: BbmlSyntaxTree = [{type: BbmlItemType.Screen, items: []}, { type: BbmlItemType.Comment, value: ''}]
