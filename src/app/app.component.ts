@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 // @ts-ignore
 import bbml from './bbml.js';
+import { BbmlSyntaxTree } from './shared/ast.model.js';
 
 @Component({
   selector: 'bb-root',
@@ -15,7 +16,7 @@ import bbml from './bbml.js';
         {{ ast | json }}
       </div>
 
-      <bb-runner class="run-pane">
+      <bb-runner class="run-pane" [ast]="ast">
       </bb-runner>
     </div>
   `,
@@ -57,7 +58,7 @@ screen Main {
   button "Log Out" -> Login
 }`
 
-  ast = [];
+  ast: BbmlSyntaxTree = [];
 
   ngOnInit() {
     this.parse(this.code);
@@ -65,7 +66,7 @@ screen Main {
 
   parse(code: string) {
     try {
-      this.ast = bbml.parse(code);
+      this.ast = bbml.parse(code) as BbmlSyntaxTree;
     } catch (e) {
       console.log(e);
     }

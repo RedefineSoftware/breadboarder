@@ -1,8 +1,3 @@
-
-export interface BbmlDeclaration {
-  type: string;
-}
-
 export type BbmlScreenName = string;
 export type BbmlComponentName = string;
 
@@ -64,8 +59,7 @@ export interface BbmlComment {
 
 
 export type BbmlScreenItem = 
-  BbmlScreen
-  | BbmlButton
+  BbmlButton
   | BbmlLabel
   | BbmlField
   | BbmlComponent
