@@ -42,7 +42,8 @@ export class AppComponent {
     minimap: {
       enabled: false
     },
-    autoClosingBrackets: 'languageDefined'
+    autoClosingBrackets: 'languageDefined',
+    tabSize: 2
   };
 
   code = `screen Login {
