@@ -12,12 +12,7 @@ import { BbmlSyntaxTree } from './shared/ast.model.js';
         <ngx-monaco-editor style="height: 100%" [options]="editorOptions" [(ngModel)]="code" (ngModelChange)="parse(code)"></ngx-monaco-editor>
       </div>
 
-      <div class="breadboard-pane">
-        {{ ast | json }}
-      </div>
-
-      <bb-runner class="run-pane" [ast]="ast">
-      </bb-runner>
+      <bb-runner class="run-pane" [ast]="ast"></bb-runner>
     </div>
   `,
   styles: [`
@@ -27,15 +22,13 @@ import { BbmlSyntaxTree } from './shared/ast.model.js';
       width: 100vw;
     }
 
-    .code-pane, .breadboard-pane, .run-pane {
-      flex: 1;
-    }
-
     .code-pane {
+      flex: 1;
       background: #1e1e1e;
     }
 
     .run-pane {
+      flex: 2;
       overflow: auto;
     }
   `]

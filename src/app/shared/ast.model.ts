@@ -68,5 +68,5 @@ export type BbmlScreenItem =
   | BbmlConditional
   | BbmlComment;
 
-export type BbmlSyntaxTree = BbmlScreen[];
+export type BbmlSyntaxTree = (BbmlScreen | BbmlComment)[];
 

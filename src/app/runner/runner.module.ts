@@ -1,5 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ButtonComponent } from './button.component';
+import { FieldComponent } from './field.component';
+import { LabelComponent } from './label.component';
 import { RunnerComponent } from './runner.component';
 import { ScreenComponent } from './screen.component';
 
@@ -9,7 +12,10 @@ import { ScreenComponent } from './screen.component';
   ],
   declarations: [
     RunnerComponent,
-    ScreenComponent
+    ScreenComponent,
+    FieldComponent,
+    ButtonComponent,
+    LabelComponent
   ],
   exports: [
     RunnerComponent
