@@ -23,12 +23,12 @@ import { BbmlSyntaxTree } from './shared/ast.model.js';
     }
 
     .code-pane {
-      flex: 2;
+      flex: 1;
       background: #1e1e1e;
     }
 
     .run-pane {
-      flex: 3;
+      flex: 2;
       overflow: auto;
     }
   `]
