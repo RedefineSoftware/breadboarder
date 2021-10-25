@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { BbmlItemType, BbmlSyntaxTree } from '../shared/ast.model';
-import { Network, parseDOTNetwork } from 'vis-network/standalone';
-import { Graph, Vertex } from './graph.utils';
+import { Graph } from './graph.utils';
+import ELK from 'elkjs/lib/elk.bundled.js'
 
 const dotString = `digraph dbml {
   rankdir=LR;
@@ -19,9 +19,9 @@ const dotString = `digraph dbml {
 
       <div class="graph-container" #graphContainer>
 
-        <div *ngFor="let v of vertices" [ngStyle]="{ position: 'absolute', top: v.posy + 'px', left: v.posx + 'px', border: '1px solid red', width: '200px', height: '300px' }">
+        <div *ngFor="let v of vertices" [ngStyle]="{ position: 'absolute', top: v.y + 'px', left: v.x + 'px', border: '1px solid red', width: '200px', height: '300px' }">
           <ng-container *ngFor="let item of ast">
-            <bb-screen [screen]="item" *ngIf="item.type === BbmlItemType.Screen && item.name === v.name"></bb-screen>
+            <bb-screen [screen]="item" *ngIf="item.type === BbmlItemType.Screen && item.name === v.id"></bb-screen>
           </ng-container>
         </div>
       </div>
@@ -62,56 +62,27 @@ export class RunnerComponent {
   }
 
   render() {
-    const g = new Graph();
-    g.createVertex('Profile');
-    g.createVertex('Main');
-    g.createVertex('Login');
-    g.createEdge('Main', 'Profile');
-    g.createEdge('Login', 'Main');
 
-    const vertices: any[] = [];
-    for (let v in g.vertices) {
-      vertices.push({
-        ...g.vertices[v],
-        name: v
-      });
+    const elk = new ELK()
+
+    const graph = {
+      id: "root",
+      layoutOptions: { 'elk.algorithm': 'layered' },
+      children: [
+        { id: "Profile", width: 200, height: 300 },
+        { id: "Main", width: 200, height: 300 },
+        { id: "Login", width: 200, height: 300 }
+      ],
+      edges: [
+        { id: "e1", sources: [ "Login" ], targets: [ "Main" ] },
+        { id: "e2", sources: [ "Login" ], targets: [ "Profile" ] }
+      ]
     }
 
-    this.vertices = vertices;
-
-
-    var parsedData = parseDOTNetwork(dotString);
-
-
-
-
-    // const svg = vizRenderStringSync(dotString, {
-    //   engine: 'dot',
-    //   format: 'svg',
-    // });
-
-    // console.log(svg)
-
-    var data = {
-      nodes: parsedData.nodes,
-      edges: parsedData.edges
-    }
-
-    var options = parsedData.options;
-
-    // you can extend the options like a normal JSON variable:
-    options.nodes = {
-      color: 'red'
-    }
-
-
-    // // create a network
-    // var container = this.graphContainer?.nativeElement;
-
-    // // initialize your network!
-    // if (container) {
-    //   var network = new Network(container, data, options);
-    //   console.log(container)
-    // }
+    elk.layout(graph)
+      .then((g) => {
+        this.vertices = g.children || [];
+      })
+      .catch(() => {})
   }
 }

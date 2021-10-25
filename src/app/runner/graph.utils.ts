@@ -20,7 +20,6 @@ export class Graph {
   repulsion = 200000; // repulsion constant, adjust for wider/narrower spacing
   spring_length = 500; // base resting length of springs
   stepsize = 0.0005;
-  iteration = 0;
   task: any = null;
   posx = 0;
   posy = 0;
@@ -97,6 +96,8 @@ export class Graph {
         minPosY = posy;
       }
     }
+
+    console.log(this.vertices)
 
     for (let i in this.vertices) {
       if (minPosX < 0) {

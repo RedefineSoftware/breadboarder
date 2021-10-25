@@ -65,7 +65,7 @@ screen Main {
     try {
       this.ast = bbml.parse(code) as BbmlSyntaxTree;
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   }
 }
