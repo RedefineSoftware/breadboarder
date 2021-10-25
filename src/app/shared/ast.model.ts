@@ -49,8 +49,8 @@ export type BbmlCondition = string;
 export interface BbmlConditional {
   type: BbmlItemType.Conditional;
   condition: BbmlCondition;
-  ifItems: BbmlScreenItem[] | null | undefined;
-  elseItems: BbmlScreenItem[] | null | undefined;
+  ifItems: BbmlScreenItem[] | undefined;
+  elseItems: BbmlScreenItem[] | undefined;
 }
 
 export interface BbmlComment {

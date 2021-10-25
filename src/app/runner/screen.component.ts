@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { BbmlItemType, BbmlScreen } from '../shared/ast.model';
+import { BbmlScreen } from '../shared/ast.model';
 
 @Component({
   selector: 'bb-screen',
@@ -8,11 +8,7 @@ import { BbmlItemType, BbmlScreen } from '../shared/ast.model';
       <span>{{ screen?.name }}</span>
     </div>
     <div class="screen">
-      <ng-container *ngFor="let item of screen?.items">
-        <bb-field [field]="item" *ngIf="item.type === BbmlItemType.Field"></bb-field>
-        <bb-button [button]="item" *ngIf="item.type === BbmlItemType.Button"></bb-button>
-        <bb-label [label]="item" *ngIf="item.type === BbmlItemType.Label"></bb-label>
-      </ng-container>
+      <bb-screen-items [items]="screen?.items"></bb-screen-items>
     </div>
   `,
   styles: [`
@@ -35,6 +31,4 @@ import { BbmlItemType, BbmlScreen } from '../shared/ast.model';
 })
 export class ScreenComponent {
   @Input() screen?: BbmlScreen;
-
-  public BbmlItemType = BbmlItemType;
 }
