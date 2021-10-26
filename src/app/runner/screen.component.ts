@@ -20,6 +20,7 @@ import { BbmlScreen } from '../shared/ast.model';
     }
 
     .screen {
+      box-sizing: border-box;
       border-radius: 8px;
       border: 1px solid black;
       width: 200px;
