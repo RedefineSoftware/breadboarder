@@ -4,6 +4,47 @@ import { Component } from '@angular/core';
 import bbml from './bbml.js';
 import { BbmlSyntaxTree } from './shared/ast.model.js';
 
+const BBML_SAMPLE = `screen Login {
+  field "Username: "
+  field "Password: "
+  button "Log In" -> Main
+}
+
+screen Main {
+  button "Go to Profile" -> Profile
+  button "Log Out" -> Login
+}
+
+screen Profile {
+  label "This is some sample text that should go on this screen"
+  button "Go to Main" -> Main
+}
+
+screen LeadsAndTraffic {
+  button "Lead Summary" -> LeadDetails
+}
+
+screen LeadDetails {
+  component "Lead Summary"
+  component "Lead Info from XML"
+
+  if "Lead has potential duplicates" {
+    button "Process Lead" -> ProcessLead
+  } else {
+    button "Process Lead" -> SelectPotentialCustomer
+  }
+}
+
+screen SelectPotentialCustomer {
+  if "If statement without an Else" {
+    // button "Do something" -> Profile
+  }
+}
+
+screen ProcessLead {
+  goto SelectPotentialCustomer
+}`;
+
 @Component({
   selector: 'bb-root',
   template: `
@@ -24,6 +65,7 @@ import { BbmlSyntaxTree } from './shared/ast.model.js';
 
     .code-pane {
       flex: 1;
+      padding-top: 8px;
       background: #1e1e1e;
     }
 
@@ -44,16 +86,7 @@ export class AppComponent {
     tabSize: 2
   };
 
-  code = `screen Login {
-  field "Username: "
-  field "Password: "
-  button "Log In" -> Main
-}
-
-screen Main {
-  button "Go to Profile" -> Profile
-  button "Log Out" -> Login
-}`
+  code = BBML_SAMPLE;
 
   ast: BbmlSyntaxTree = [];
 

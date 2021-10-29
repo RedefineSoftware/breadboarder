@@ -7,6 +7,7 @@ import { ConditionalComponent } from './conditional.component';
 import { FieldComponent } from './field.component';
 import { LabelComponent } from './label.component';
 import { RunnerComponent } from './runner.component';
+import { RunnerService } from './runner.service';
 import { ScreenItemsComponent } from './screen-items.component';
 import { ScreenComponent } from './screen.component';
 
@@ -28,7 +29,9 @@ import { ScreenComponent } from './screen.component';
   exports: [
     RunnerComponent
   ],
-  providers: []
+  providers: [
+    RunnerService
+  ]
 })
 export class RunnerModule {
 

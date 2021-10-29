@@ -1,9 +1,12 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BbmlComment, BbmlItemType, BbmlScreen, BbmlSyntaxTree } from '../shared/ast.model';
 import ELK from 'elkjs/lib/elk.bundled.js'
 import { findOutgoingNodes } from '../shared/ast.utils';
 import { v4 as uuidV4 } from 'uuid';
-import { curveBundle, line } from 'd3-shape';
+import { line } from 'd3-shape';
+import { RunnerService } from './runner.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 function getBezierCenter({
   sourceX,
@@ -106,7 +109,7 @@ function computeSVGPath(sections: any[]) {
         <ng-container *ngFor="let v of vertices">
           <div [ngStyle]="{ position: 'absolute', top: v.y + 'px', left: v.x + 'px', width: '220px', height: '340px', 'padding': '10px', 'box-sizing': 'border-box', display: 'flex', 'justify-content': 'center' }">
             <ng-container *ngFor="let item of ast">
-              <bb-screen [screen]="item" *ngIf="item.type === BbmlItemType.Screen && item.name === v.id"></bb-screen>
+              <bb-screen [active]="item.name === activeScreen" [screen]="item" *ngIf="item.type === BbmlItemType.Screen && item.name === v.id"></bb-screen>
             </ng-container>
           </div>
         </ng-container>
@@ -139,6 +142,24 @@ export class RunnerComponent {
   public vertices: any[] = [];
   public edges: any[] = [];
   public graphSize: { width: number; height: number } = {width: 0, height: 0};
+  public activeScreen: string | null = null;
+  private destroy$ = new Subject<void>();
+
+  constructor(public runnerService: RunnerService) {
+    
+  }
+
+  ngOnInit() {
+    this.runnerService.activeScreen$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((screen: string | null) => {
+        this.activeScreen = screen;
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+  }
  
   ngAfterViewInit() {    
     this.render();
@@ -226,6 +247,12 @@ export class RunnerComponent {
         };
 
         this.vertices = g.children || [];
+        const screens = this.vertices.map((v) => v.id);
+        if ((!this.activeScreen || !screens.includes(this.activeScreen)) && screens[0]) {
+          this.runnerService.activeScreen$.next(screens[0]);
+        } else {
+          this.runnerService.activeScreen$.next(null);
+        }
 
         const edges_with_geometry = edges.map((e: any) => {
           console.log(e)
