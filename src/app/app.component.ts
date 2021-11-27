@@ -20,29 +20,29 @@ screen Profile {
   button "Go to Main" -> Main
 }
 
-screen LeadsAndTraffic {
-  button "Lead Summary" -> LeadDetails
+screen Friends {
+  button "Friend Summary" -> FriendDetails
 }
 
-screen LeadDetails {
-  component "Lead Summary"
-  component "Lead Info from XML"
+screen FriendDetails {
+  component "Friend Summary"
+  component "Mutual Friends List"
 
-  if "Lead has potential duplicates" {
-    button "Process Lead" -> ProcessLead
+  if "Friend has photos" {
+    button "Photos" -> Photos
   } else {
-    button "Process Lead" -> SelectPotentialCustomer
+    button "Tag in photos" -> TagInPhotos
   }
 }
 
-screen SelectPotentialCustomer {
+screen TagInPhotos {
   if "If statement without an Else" {
     // button "Do something" -> Profile
   }
 }
 
-screen ProcessLead {
-  goto SelectPotentialCustomer
+screen Photos {
+  
 }`;
 
 @Component({
@@ -86,15 +86,24 @@ export class AppComponent {
     tabSize: 2
   };
 
-  code = BBML_SAMPLE;
+  code = '';
 
   ast: BbmlSyntaxTree = [];
 
   ngOnInit() {
+    const code = localStorage.getItem('bbml-code');
+    if (code) {
+      this.code = code;
+    } else {
+      this.code = BBML_SAMPLE;
+    }
+
     this.parse(this.code);
   }
 
   parse(code: string) {
+    localStorage.setItem('bbml-code', code);
+
     try {
       this.ast = bbml.parse(code) as BbmlSyntaxTree;
     } catch (e) {
