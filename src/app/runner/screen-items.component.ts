@@ -22,10 +22,11 @@ import { BbmlItemType, BbmlScreenItem } from '../shared/ast.model';
 
     .screen-items > * {
       margin-bottom: 8px;
-      border: 1px solid #ddd;
+      border: 1px solid #222;
+      color: #f5f5f5;
       padding: 4px;
       border-radius: 4px;
-      background: #efefef;
+      background: #333;
     }
   `]
 })

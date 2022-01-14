@@ -50,7 +50,7 @@ screen Photos {
   template: `
     <div class="container">
       <div class="code-pane">
-        <ngx-monaco-editor style="height: 100%" [options]="editorOptions" [(ngModel)]="code" (ngModelChange)="parse(code)"></ngx-monaco-editor>
+        <ngx-monaco-editor class="editor" [options]="editorOptions" [(ngModel)]="code" (ngModelChange)="parse(code)"></ngx-monaco-editor>
       </div>
 
       <bb-runner class="run-pane" [ast]="ast"></bb-runner>
@@ -59,14 +59,21 @@ screen Photos {
   styles: [`
     .container {
       display: flex;
-      height: 100vh;
+      max-height: 100vh;
       width: 100vw;
     }
 
     .code-pane {
+      padding: 12px;
       flex: 1;
-      padding-top: 8px;
+    }
+
+    .editor {
+      border-radius: 8px;
+      padding: 8px;
       background: #1e1e1e;
+      height: 100%;
+      box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     }
 
     .run-pane {

@@ -5,7 +5,7 @@ import { RunnerService } from './runner.service';
 @Component({
   selector: 'bb-button',
   template: `
-    <button (click)="activateScreen(button?.destination)">{{ button?.label }}</button>
+    <button (click)="activateScreen($event, button?.destination)">{{ button?.label }}</button>
   `
 })
 export class ButtonComponent {
@@ -13,7 +13,8 @@ export class ButtonComponent {
 
   constructor(public runnerService: RunnerService) {}
 
-  activateScreen(destination?: BbmlComponentName) {
+  activateScreen($event: MouseEvent, destination?: BbmlComponentName) {
+    $event.stopPropagation();
     if (destination) {
       this.runnerService.activeScreen$.next(destination);
     }

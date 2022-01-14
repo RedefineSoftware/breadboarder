@@ -99,11 +99,11 @@ function computeSVGPath(sections: any[]) {
           <defs>
             <marker id="arrowhead" markerWidth="5" markerHeight="6" 
             refX="0" refY="3" orient="auto">
-              <polygon points="0 0, 5 3, 0 6" />
+              <polygon points="0 0, 5 3, 0 6" fill="#666" />
             </marker>
           </defs>
           <path *ngFor="let edge of edges" [attr.d]="edge.path"
-            stroke="#999" stroke-width="1" fill="transparent" marker-end="url(#arrowhead)"></path>
+            stroke="#666" stroke-width="1" fill="transparent" marker-end="url(#arrowhead)"></path>
         </svg>
 
         <ng-container *ngFor="let v of vertices">
