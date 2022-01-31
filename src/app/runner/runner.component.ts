@@ -93,7 +93,12 @@ function computeSVGPath(sections: any[]) {
 @Component({
   selector: 'bb-runner',
   template: `
-    <div class="runner">
+    <div class="zoom-control">
+      <span>Zoom</span>
+      <input type="range" [(ngModel)]="zoom" min="0.1" max="2" step="0.1" />
+    </div>
+
+    <div class="runner" [ngStyle]="{ zoom: zoom }">
       <div class="graph-container" [ngStyle]="{ width: graphSize.width + 'px', height: graphSize.height + 'px' }">
         <svg class="edges" [ngStyle]="{ width: graphSize.width + 'px', height: graphSize.height + 'px' }">
           <defs>
@@ -107,7 +112,7 @@ function computeSVGPath(sections: any[]) {
         </svg>
 
         <ng-container *ngFor="let v of vertices">
-          <div [ngStyle]="{ position: 'absolute', top: v.y + 'px', left: v.x + 'px', width: '220px', height: '340px', 'padding': '10px', 'box-sizing': 'border-box', display: 'flex', 'justify-content': 'center' }">
+          <div [ngStyle]="{ position: 'absolute', top: v.y + 'px', left: v.x + 'px', width: '280px', height: '440px', 'padding': '10px', 'box-sizing': 'border-box', display: 'flex', 'justify-content': 'center' }">
             <ng-container *ngFor="let item of ast">
               <bb-screen [active]="item.name === activeScreen" [screen]="item" *ngIf="item.type === BbmlItemType.Screen && item.name === v.id"></bb-screen>
             </ng-container>
@@ -117,6 +122,35 @@ function computeSVGPath(sections: any[]) {
     </div>
   `,
   styles: [`
+    .zoom-control {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: #111;
+      border-radius: 8px;
+      color: #fff;
+      display: flex;
+      padding: 12px;
+      z-index: 9999;
+    }
+
+    input[type="range"] { margin-left: 8px;}
+
+    input[type="range"]::-webkit-slider-runnable-track {
+      background: #ddd;
+      height: 4px;
+      border-radius: 4px;
+    }
+
+    input[type="range"]::-moz-range-track {
+      background: #ddd;
+      height: 4px;
+      border-radius: 4px;
+    }
+
+    input[type="range"]::-webkit-slider-thumb  { margin-top: -5px; }
+    input[type="range"]::-moz-range-thumb { margin-top: -5px; }
+
     .runner {
       display: flex;
       flex: 1;
@@ -144,6 +178,7 @@ export class RunnerComponent {
   public graphSize: { width: number; height: number } = {width: 0, height: 0};
   public activeScreen: string | null = null;
   private destroy$ = new Subject<void>();
+  public zoom = 1;
 
   constructor(public runnerService: RunnerService) {
     
@@ -177,8 +212,8 @@ export class RunnerComponent {
     const children = screens?.map((screen: BbmlScreen) => {
       return {
         id: screen.name,
-        width: 220,
-        height: 340,
+        width: 280,
+        height: 440,
         ports: [{
           id: screen.name + '-from',
           properties: {

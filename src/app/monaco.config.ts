@@ -31,7 +31,7 @@ export const monacoConfig: NgxMonacoEditorConfig = {
       ],
 
       typeKeywords: [
-        'screen', 'component', 'button', 'field', 'label'
+        'screen', 'component', 'button', 'field', 'label', 'vstack', 'hstack'
       ],
 
       operators: [

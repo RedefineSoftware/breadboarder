@@ -10,11 +10,23 @@ export enum BbmlItemType {
   GoTo = 'goto',
   Conditional = 'conditional',
   Comment = 'comment',
+  VStack = 'vstack',
+  HStack = 'hstack'
 }
 
 export interface BbmlScreen {
   type: BbmlItemType.Screen;
   name: string;
+  items: BbmlScreenItem[];
+}
+
+export interface BbmlVStack {
+  type: BbmlItemType.VStack;
+  items: BbmlScreenItem[];
+}
+
+export interface BbmlHStack {
+  type: BbmlItemType.HStack;
   items: BbmlScreenItem[];
 }
 
@@ -66,7 +78,9 @@ export type BbmlScreenItem =
   | BbmlComponent
   | BbmlGoTo
   | BbmlConditional
-  | BbmlComment;
+  | BbmlComment
+  | BbmlVStack
+  | BbmlHStack;
 
 export type BbmlSyntaxTree = (BbmlScreen | BbmlComment)[];
 

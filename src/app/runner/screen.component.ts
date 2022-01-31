@@ -23,8 +23,8 @@ import { RunnerService } from './runner.service';
     .screen {
       box-sizing: border-box;
       border-radius: 8px;
-      width: 200px;
-      height: 300px;
+      width: 260px;
+      height: 420px;
       padding: 8px;
       margin-top: 4px;
       overflow: auto;
